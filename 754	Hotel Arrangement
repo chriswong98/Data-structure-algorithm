@@ -1,0 +1,99 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 92494
+ * Submitted at:  2019-10-24 16:23:16
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    754
+ * Problem Name:  Hotel Arrangement
+ */
+
+#include <iostream>
+#include<algorithm>
+using namespace std;
+
+// Returns true if it is possible to arrange 
+// k elements of arr[0..n-1] with minimum distance 
+// given as mid. 
+bool isFeasible(int mid, int arr[], int n, int k)
+{
+	// Place first element at arr[0] position 
+	int pos = arr[0];
+
+	// Initialize count of elements placed. 
+	int elements = 1;
+
+	// Try placing k elements with minimum 
+	// distance mid. 
+	for (int i = 1; i<n; i++)
+	{
+		if (arr[i] - pos >= mid)
+		{
+			// Place next element if its 
+			// distance from the previously 
+			// placed element is greater 
+			// than current mid 
+			pos = arr[i];
+			elements++;
+
+			// Return if all elements are placed 
+			// successfully 
+			if (elements == k)
+				return true;
+		}
+	}
+	return 0;
+}
+
+int main() {
+
+	int T;
+
+	cin >> T;
+
+	while (T--) {
+		int N;
+		int C;
+		
+		cin >> N  >> C;
+
+		int* result = new int[N];
+		for (int i = 0; i < N; i++) {
+			cin >> result[i];
+		}
+	
+		sort(result, result + N);
+		int res = -1;
+
+
+		int left = result[0], right = result[N - 1];
+		// Do binary search for largest minimum distance 
+		while (left < right)
+		{
+			int mid = (left + right) / 2;
+
+			// If it is possible to place k elements 
+			// with minimum distance mid, search for 
+			// higher distance. 
+			if (isFeasible(mid, result, N, C))
+			{
+				// Change value of variable max to mid iff 
+				// all elements can be successfully placed 
+				res = std::max(res, mid);
+				left = mid + 1;
+			}
+
+			// If not possible to place k elements, search 
+			// for lower distance 
+			else
+				right = mid;
+		}
+		cout << res << endl;
+
+	}
+
+
+
+	return 0;
+}
