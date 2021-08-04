@@ -1,0 +1,93 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 127669
+ * Submitted at:  2020-05-16 22:06:32
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    194
+ * Problem Name:  8 Queens Chess Problem (UVa 750)
+ */
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+
+
+
+int result[8] ;
+int row[8] ;
+int col[8];
+int sol_no = 1;
+
+int startRow, startColumn;
+int check(int r, int column, int curr) {//check if row, col element coincides with any element
+	for (int i = 0; i < curr; i++) {
+		if (abs(row[i] - r) == abs(col[i] - column)){
+			return 0;
+		}
+	}
+	return 1;
+}
+
+void solution(int currentColumn) {
+
+	if (currentColumn == 8) {
+		if (col[startColumn - 1] == startRow - 1) {
+			cout << setw(2) << sol_no++;
+			cout << "      ";
+			for (int j = 0; j < 7; j++) {
+				cout << col[j] + 1 << " ";
+			}
+			cout << col[7]+1 << endl;
+		}
+	}
+
+	
+		for (int i = 0; i < 8; i++) {//for each row
+
+			int c = check( currentColumn,i, currentColumn);
+			if (result[i] == 0 &&   c == 1) {
+				
+				result[i] = 1;
+				row[currentColumn] = currentColumn;
+				col[currentColumn] = i;
+				solution(currentColumn + 1);
+				result[i] = 0;
+			}
+		}
+	
+
+
+}
+
+
+
+int main() {
+
+	int T;
+
+	cin >> T;
+	bool first = true;
+	while (T--) {
+
+		cin >> startRow >> startColumn;
+
+		if (!first) {
+			cout << endl;
+		}
+		cout << "SOLN" << "       " << "COLUMN" << endl;
+		cout << " " << "#" << "     ";
+		for (int i = 1; i <= 8; i++) {
+			cout << " " << i;
+		}
+		cout << endl << endl;
+
+		solution(0);
+		sol_no = 1;
+
+		first = false;
+	}
+	system("pause");
+}
