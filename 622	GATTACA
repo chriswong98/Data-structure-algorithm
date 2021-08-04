@@ -1,0 +1,74 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 121026
+ * Submitted at:  2020-04-28 19:27:00
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    622
+ * Problem Name:  GATTACA
+ */
+
+#include <iostream>
+#include <string>
+#include <map>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	int T;
+
+	cin >> T;
+
+		while (T--) {
+			string s;
+			cin >> s;
+
+			vector<string> suffix;
+
+			suffix.push_back(s);
+
+			while (s.length() > 0) {
+				s.erase(s.begin());
+				suffix.push_back(s);
+			}
+
+			sort(suffix.begin(), suffix.end());
+
+			string tmp = "";
+			int  cntOccured = 0;
+			string seq = "";
+			for (int i = 1; i < suffix.size(); i++) {
+
+				int commonPart = 0;
+
+				while (commonPart < suffix[i].length() && commonPart < suffix[i - 1].length() && suffix[i][commonPart] == suffix[i - 1][commonPart]) {
+
+					commonPart++;
+				}
+
+				if (commonPart > 0) {
+					tmp = suffix[i].substr(0, commonPart);
+					if (tmp == seq) {
+						cntOccured++;
+					}
+					else if (commonPart > seq.length() ||   ( tmp < seq  &&  commonPart == seq.length() ) ) {
+						seq = tmp;
+						cntOccured = 2;
+					}
+				}
+			}
+
+			if (cntOccured == 0) {
+				cout << "No repetitions found!" << endl;
+			}
+			else {
+				cout << seq << " " << cntOccured << endl;
+			}
+			
+		}
+}
