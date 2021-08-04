@@ -1,0 +1,71 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 115152
+ * Submitted at:  2020-03-21 23:03:40
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    266
+ * Problem Name:  Cow Contest
+ */
+
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+int cowsRecord[101][101] = { 0 };
+
+int main() {
+
+
+	int n, m;
+
+	while (cin >> n >> m) {
+
+		memset(cowsRecord, 0, sizeof(cowsRecord));
+
+		for (int i = 0; i < m; i++) {
+			int cow1, cow2;
+
+			cin >> cow1 >> cow2;
+
+			cowsRecord[cow1][cow2] = 1;
+		}
+
+		for (int k = 1; k <= n; k++) {
+			for (int i = 1; i <= n; i++) {
+				if (i == k) {
+					continue;
+				}
+				for (int j = 1; j <= n; j++) {
+					if (cowsRecord[i][k] && cowsRecord[k][j])
+						cowsRecord[i][j] = 1;
+				}
+			}
+		}
+
+		int numOfRanks=0;
+		for (int i = 1; i <= n; i++) {
+			int wins = 0;
+			int loses = 0;
+			for (int j = 1; j <= n; j++) {
+
+				if (cowsRecord[i][j] == 1) {
+					wins++;
+				}
+
+				if (cowsRecord[j][i] == 1) {
+					loses++;
+				}
+
+
+			}
+			if ((wins + loses+1) == n) {
+				numOfRanks++;
+			}
+
+		}
+		cout << numOfRanks << endl;
+	}
+
+}
