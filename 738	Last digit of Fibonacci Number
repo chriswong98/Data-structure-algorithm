@@ -1,0 +1,56 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 87410
+ * Submitted at:  2019-09-17 23:07:00
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    738
+ * Problem Name:  Last digit of Fibonacci Number
+ */
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <cstdio>
+#include <sstream>
+
+using namespace std;
+
+
+
+int fib(int n){
+
+
+     int  a = 0, b = 1, c, i;
+  if( n == 0)
+    return a;
+  for (i = 2; i <= n; i++)
+  {
+     c = a + b;
+     a = b;
+     b  = c % 10;
+
+  }
+  return  b ;
+
+}
+
+int main()
+{
+    int input;
+    vector<int> intHolder;
+    while(cin >> input){
+        intHolder.push_back(input);
+
+    }
+
+    int vSize = intHolder.size();
+
+    for (int i = 0; i < vSize; i++) {
+        cout << fib(intHolder[i])  <<endl;
+    }
+    return 0;
+}
