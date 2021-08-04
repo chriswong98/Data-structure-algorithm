@@ -1,0 +1,87 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 118484
+ * Submitted at:  2020-03-30 01:19:30
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    168
+ * Problem Name:  Networking
+ */
+
+#include <iostream>
+#include<string.h>
+#include <stdlib.h> 
+using namespace std;
+
+int A[1000];
+int totalLength = 0;
+struct Edge {
+	int From, To, Length;
+};
+Edge* All_Edges;
+ int CMP(const void *a, const void *b) {
+	Edge *A = (Edge*)a;
+	Edge *B = (Edge*)b;
+	return A->Length - B->Length;
+}
+ void UnionSet(int set1, int set2) {
+	 A[set1] += A[set2]; // A[ root of set ] is negative, and its
+	 A[set2] = set1;     // magnitude is the num of members
+ }
+ int Find(int element) {
+	 if (A[element] < 0)
+		 return element;
+	 else
+		 return A[element] = Find(A[element]);
+ }
+void Union(int element1, int element2, int weight) {
+	int root1 = Find(element1);
+	int root2 = Find(element2);
+
+	if (root1 != root2) {
+		totalLength += weight;
+		if (A[root1] < A[root2]) //root1 has more member		
+			UnionSet(root1, root2);
+		else
+			UnionSet(root2, root1);
+	}
+}
+
+
+
+
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	int P, R;
+
+
+	while (cin >> P && P!=0){
+
+		memset(A, -1, sizeof(A));
+		totalLength = 0;
+		cin >> R;
+		All_Edges = new Edge[R + 1];
+		for (int i = 0; i < R; i++) {
+
+			int start;
+			int end;
+			int weight;
+			cin >> start >> end >> weight;
+			Edge e{start,end,weight};
+			All_Edges[i] = e;
+
+		}
+		qsort(All_Edges, R, sizeof(Edge), CMP);
+
+		for (int i = 0; i < R; i++) {
+
+			Union(All_Edges[i].From, All_Edges[i].To, All_Edges[i].Length);
+
+		}
+		cout << totalLength << endl;
+	}
+
+}
