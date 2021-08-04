@@ -1,0 +1,37 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 110056
+ * Submitted at:  2020-02-06 16:51:03
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    438
+ * Problem Name:  Party
+ */
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+
+
+	int T;
+	
+	cin >> T;
+
+	while (T--) {
+
+		int N;
+
+		cin >> N;
+
+		if (N == 1 || N == 2) {
+			cout << 0 << endl;
+		}
+		else {
+			cout << (N - 2) << endl;
+		}
+	}
+
+}
