@@ -1,0 +1,104 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 108218
+ * Submitted at:  2020-01-19 19:20:01
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    190
+ * Problem Name:  Equation (UVa 727)
+ */
+
+#include <iostream>
+#include <string>
+#include <stack>
+using namespace std;
+
+int prec(char c)
+{
+	if (c == '*' || c == '/')
+		return 3;
+	else if (c == '+' || c == '-')
+		return 2;
+	else
+		return 1;
+}
+
+
+int main() {
+
+
+	int T;
+
+	cin >> T;
+	T++;
+	stack<char> s;
+	stack<char> empty;
+	bool first = true;
+	bool doubleLine = true;
+	string result = "";
+	while (T>0) {
+
+		
+
+			
+			//cin.ignore();
+			string c;
+			getline(cin, c);
+
+			if (c.empty()) {
+				if (first) {
+					first = false;
+					continue;
+				}
+				T--;
+				while (!s.empty()) {
+					result += s.top();
+					s.pop();
+				}
+				s = empty;
+				if ( !result.empty() && !doubleLine) {
+					cout << endl << result << endl;
+				}
+				else {
+					if (!result.empty()) {
+						cout << result << endl;
+						doubleLine = false;
+					}
+				}
+				result = "";
+			}
+			else if (c[0] == '(') {
+				s.push(c[0]);
+			}
+			else if (c[0] == ')') {
+				while (!s.empty()) {
+
+					if (s.top() == '(') {
+						s.pop();
+						break;
+					}
+					else {
+						result+= s.top();
+						s.pop();
+					}
+
+				}
+			}
+			else if (c[0] == '+' || c[0] == '-' || c[0] == '*' || c[0] == '/') {
+				while (!s.empty() && prec(c[0]) <= prec(s.top()))
+				{
+					result += s.top();
+					s.pop();
+				}
+				s.push(c[0]);
+			}
+			else {
+				result += c[0];
+			}
+		
+
+	}
+
+	//system("pause");
+}
