@@ -1,0 +1,59 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 103496
+ * Submitted at:  2019-12-20 20:51:35
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    746
+ * Problem Name:  Fast Food Restaurant
+ */
+
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+
+
+int main() {
+	int N;
+	queue <int> empty;
+	while (cin >> N) {
+		queue <int> line;
+		int queueTime = 0;
+		while (N-->0) {
+			int arrivalTime, orderTime, waitTime;
+			cin >> arrivalTime >> orderTime >> waitTime;
+			if (arrivalTime>queueTime)
+				queueTime = arrivalTime;
+			while (!line.empty()) {
+				if (line.front() <= arrivalTime)
+					line.pop();
+				else
+					break;
+			}
+
+			if (waitTime<line.size()) {
+				if (N == 0) {
+					cout << "-1" << endl;
+					break;
+				}
+			}
+			else {
+				if (N == 0) {
+					cout << queueTime << endl;
+					break;
+				}
+				queueTime += orderTime;
+				int finishTime = queueTime;
+				line.push(finishTime);
+
+			}
+		}
+		swap(line, empty);
+		//while (!line.empty())
+		//	line.pop();
+	}
+	return 0;
+}
