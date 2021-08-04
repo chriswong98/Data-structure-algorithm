@@ -1,0 +1,72 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 118929
+ * Submitted at:  2020-04-05 19:36:44
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    689
+ * Problem Name:  Rising Trend
+ */
+
+#include <iostream>
+#include<vector>
+#include <algorithm>
+using namespace std;
+
+
+
+
+int longest(vector<int> v) {
+
+	vector<int> v2;
+
+	v2.push_back(v[0]);
+	for (int i = 1; i < v.size(); ++i)
+	{
+		int tmp = v[i];
+	
+		if (tmp >= v2.back()) {
+			v2.push_back(tmp);
+		}
+		else {
+			//vector<int>::iterator low, up;
+			*upper_bound(v2.begin(), v2.end(), tmp) = tmp;
+
+			//int pos = (low - v2.begin());
+			//if (v2[pos] == tmp) {
+			//	count++;
+			//}
+
+			//v2[pos] = tmp;
+			
+
+		}
+	}
+	//for (int i = 0; i < v2.size(); i++) {
+	//	cout << v2[i] <<"&";
+	//}
+
+
+	return v2.size();
+
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	int n;
+
+	while (cin >> n) {
+		vector<int> v;
+		for (int i = 0; i < n; i++) {
+			int tmp;
+			cin >> tmp;
+
+			v.push_back(tmp);
+		}
+
+		cout << longest(v) << endl;
+	}
+}
