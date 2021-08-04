@@ -1,0 +1,104 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 109508
+ * Submitted at:  2020-02-01 19:07:22
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    192
+ * Problem Name:  Not so Mobile (UVa 839)
+ */
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+int checkEquil(int wL, int d1, int wR, int d2) {
+
+	int wLs, d1s, wRs, d2s;
+	int L, R;
+
+	if (wL != 0 && wR != 0) {
+		int left = (wL * d1);
+		int right = (wR * d2);
+		//cout << left << "&" << right << endl;
+		if (left == right) {
+			return (wL + wR);
+		}
+		else {
+			return -1;
+		}
+	}
+
+	if (wL == 0) {
+		cin >> wLs >> d1s >> wRs >> d2s;
+		L = checkEquil(wLs, d1s, wRs, d2s);		
+	}
+	else {
+		L = wL;
+	}
+
+	if (wR == 0) {
+		cin >> wLs >> d1s >> wRs >> d2s;
+		R = checkEquil(wLs, d1s, wRs, d2s);	
+	}
+	else {
+		R = wR;
+	}
+
+	if (L == -1 || R == -1) {
+		return -1;
+	}
+	else {
+		if (L * d1 == R * d2) {
+			return (L + R);
+		}
+		else {
+			return -1;
+		}
+	}
+
+
+}
+
+int main() {
+
+	int T;
+
+	cin >> T;
+	bool first = true;
+	string s;
+	getline(cin, s);
+	getline(cin, s);
+	while (T--) {
+
+
+		int wL, d1, wR, d2;
+
+		cin >> wL >> d1 >> wR >> d2;
+
+		if (checkEquil(wL, d1, wR, d2) == -1) {
+
+			if (first) {
+				first = false;
+				cout << "NO" << endl;
+			}
+			else {
+				cout << endl << "NO" << endl;
+			}
+		}
+		else {
+			if (first) {
+				first = false;
+				cout << "YES" << endl;
+			}
+			else {
+				cout << endl << "YES" << endl;
+			}
+		}
+
+	}
+
+	//system("pause");
+}
