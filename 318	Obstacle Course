@@ -1,0 +1,117 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 115465
+ * Submitted at:  2020-03-24 22:33:45
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    318
+ * Problem Name:  Obstacle Course
+ */
+
+#include <iostream>
+#include<queue>
+#include<vector>
+#include <cstring> 
+using namespace std;
+
+# define INF 0x3f3f3f3f 
+
+struct Point
+{
+	int x;
+	int y;
+	int cost;
+};
+
+
+int map[125][125];
+int shortestM[125][125];
+
+
+class myComparator
+{
+public:
+	int operator() (const Point& p1, const Point& p2)
+	{
+	
+		return  p1.cost > p2.cost;
+	}
+};
+
+priority_queue< Point, vector <Point>, myComparator  > pq;
+
+
+
+void relax(int r1, int c1, int r2, int c2) {
+	if (shortestM[r2][c2] > shortestM[r1][c1] + map[r2][c2]) {
+		shortestM[r2][c2] = shortestM[r1][c1] + map[r2][c2];
+		
+		pq.push(  Point{ r2,c2 , shortestM[r2][c2] }  );
+	}
+}
+
+void dijkstras(int N, int startX, int startY) {
+
+
+
+	pq.push( Point{ startX,startY,shortestM[startX][startY] } );
+	shortestM[startX][startY] = map[startX][startY];
+
+	while (!pq.empty())
+	{
+		Point p = pq.top();
+		
+
+		int row = p.x;
+		int column = p.y;
+		if (row == N - 1 && column == N - 1)
+			break;
+
+		pq.pop();
+		if (row != 0) {
+			relax(row, column, (row - 1), column);
+		}
+		if (column != 0) {
+			relax(row, column, row, (column - 1));
+		}
+		if (row != N - 1) {
+			relax(row, column, (row + 1), column);
+		}
+		if (column != N - 1) {
+			relax(row, column, row, (column + 1));
+		}
+
+
+
+	}
+
+
+
+}
+
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	int N;
+	int count = 1;
+	while (cin >> N && N!=0) {
+		memset(map, 0, sizeof(map));
+		memset(shortestM, 0, sizeof(shortestM));
+		pq = priority_queue< Point, vector <Point>, myComparator  > ();
+		for (int i = 0; i < N; i++) {
+
+			for (int j = 0; j < N; j++) {
+
+				cin >> map[i][j];
+				shortestM[i][j] = INF;
+
+			}
+
+		}
+
+		dijkstras(N, 0, 0);
+		cout << "Problem " << count++ << ": " << shortestM[N - 1][N - 1] << endl;
+	}
+}
