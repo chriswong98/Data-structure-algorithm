@@ -1,0 +1,68 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 92388
+ * Submitted at:  2019-10-24 12:46:08
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    753
+ * Problem Name:  Amazing Tree
+ */
+
+#include <iostream>
+#include <string>
+#include <sstream>
+using namespace std;
+
+
+
+int main() {
+
+	string c;
+	int open;
+
+	int matched;
+	while (getline(cin, c)) {
+		int size = c.length() / 2;
+		int* result = new int[size];
+		
+		int count = 0;
+		while(c.length() > 0){
+			matched = 0;
+			open = 0;
+			for (int j = 0; j < c.length(); j++) {
+
+				if (c[j] == '(') {
+					open++;
+				}
+				else {
+					matched++;
+				}
+				if (open == matched) {
+					c.erase(0, 1);
+					c.erase(j - 1, 1);
+					break;
+				}
+			}
+			//cout << c.length() << " ";
+			//cout << matched << " ";
+			result[count] = matched;
+			count++;
+
+		}
+
+		int a = 0;
+		for (int i = 0; i < size; i++) {
+			if (i == 0) {
+				a = result[0];
+				continue;
+			}
+			a = a ^ result[i];
+			//cout << a << " ";
+		}
+		
+		cout << a << endl;
+	}
+
+
+}
