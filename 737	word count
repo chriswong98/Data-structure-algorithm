@@ -1,0 +1,84 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 87284
+ * Submitted at:  2019-09-16 22:38:31
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    737
+ * Problem Name:  word count
+ */
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <cstdio>
+#include <sstream>
+
+using namespace std;
+
+
+
+
+int main(void)
+{
+
+
+
+
+	string words;
+	vector<string> stringHolder;
+
+
+	//ifstream infile;
+	//infile.open("text.txt");
+
+
+	//while (infile >> words)
+	//{
+	//string inputstr = "Computer system computer design algorithm design and analysis quantum computer computer science department";
+
+    while(getline(cin,words)){
+        istringstream iss(words);
+        string word;
+        while(iss >> word) {
+            stringHolder.push_back(word);
+        }
+
+    }
+    //stringstream iss(inputstr);
+
+    // while (iss >> words) {
+    //    stringHolder.push_back(words);
+    // }
+
+
+
+
+	sort(stringHolder.begin(), stringHolder.end());
+
+	int vSize = stringHolder.size();
+
+
+
+	int wordCount = 1;
+	words = stringHolder[0];
+
+	for (int i = 1; i < vSize; i++) {
+	if (words != stringHolder[i]) {
+	cout << words << " " <<  wordCount << endl;
+	wordCount = 0;
+	words = stringHolder[i];
+	}
+	wordCount++;
+	}
+
+	cout << words <<  " "  << wordCount << endl;
+
+
+	return 0;
+
+
+}
