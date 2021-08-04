@@ -1,0 +1,178 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 90010
+ * Submitted at:  2019-10-11 16:04:35
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    739
+ * Problem Name:  Circle Game
+ */
+
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+class ListNode {
+
+public:
+	int data;
+	ListNode* next;
+	ListNode(int n) {
+		data = n;
+		next = NULL;
+	}
+
+	ListNode(int n, ListNode * p) {
+		data = n;
+		next = p;
+
+	}
+
+	ListNode() {
+
+	}
+
+
+};
+
+
+
+
+int main()
+{
+
+
+
+	string numbers;
+
+	int numArray[1000];
+
+	int i = 0;
+	int numOfNode = 0;
+
+
+	cin >> numOfNode;
+	cin.ignore();
+	getline(cin, numbers);
+
+	stringstream iss(numbers);
+
+	int tmp;
+	int j = 0;
+	while (iss >> tmp) {
+		numArray[j] = tmp;
+		//  cout << tmp;
+		j++;
+	}
+
+
+
+	ListNode* node = new ListNode[numOfNode];
+	ListNode* first = &node[0];
+	//node = (new ListNode(num));
+	for (int x = 0; x<numOfNode; x++) {
+
+		node[x].data = numArray[x];
+		node[x].next = &node[x + 1];
+
+	}
+	node[numOfNode - 1].next = &node[0];
+
+	/*	while (a != NULL && a != 0) {
+	cout << a->data << " ";
+	a = a->next;
+	}*/
+
+	int numOfOp = 0;
+	cin >> numOfOp;
+	cin.ignore();
+	int rPoint = 0;
+	int op = 0;
+	int newNum = 0;
+	ListNode* p = first;
+	for (int o = 0; o< numOfOp; o++) {
+		iss.str("");
+		iss.clear();
+		numbers = "";
+
+		getline(std::cin, numbers);
+
+		stringstream  iss(numbers);
+		iss >> op;
+		p = first;
+		//op = numArray[3 + o][0];
+		//rPoint = numArray[3 + o][1];
+		iss >> rPoint;
+
+		if (op == 1) { //insert node
+			for (int i = 1; i<rPoint; i++) {
+
+				p = p->next;
+
+			}
+			iss >> newNum;
+			ListNode* newNode = (new ListNode(newNum));
+
+			ListNode* tmp = p->next;
+			p->next = newNode;
+			newNode->next = tmp;
+			first = newNode;
+		}
+		else if (op == 2) {
+
+			for (int r = 1; r< rPoint; r++) {
+				p = p->next;
+
+			}
+			ListNode* tmp2 = p->next;
+			p->data = p->next->data;
+			p->next = p->next->next;
+			tmp2->next = NULL;
+			first = p;
+
+		}
+		else if (op == 3) {
+			//p = first;
+			for (int r = 1; r< rPoint; r++) {
+
+				first = first->next;
+
+			}
+			cout << first->data << endl;
+		}
+	}
+
+	/*ListNode *a = first;
+	while (a != NULL && a != 0) {
+	cout << a->data << " ";
+	a = a->next;
+	}*/
+	//cout << p->data;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//	system("pause");
+
+
+	return 0;
+}
