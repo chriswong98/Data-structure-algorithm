@@ -1,0 +1,147 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 100735
+ * Submitted at:  2019-12-12 01:19:18
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    756
+ * Problem Name:  Max-Heap
+ */
+
+#include <iostream>
+
+using namespace std;
+#define MAX 1000
+
+ class MaxHeap {
+ public:
+	 int count;
+
+
+
+	void heapify(int arr[], int i)
+	{// n = number of root
+	 // i = 
+		int largest = i; // Initialize largest as root 
+		int l = 2 * i + 1; // left = 2*i + 1 
+		int r = 2 * i + 2; // right = 2*i + 2 
+
+						   // If left child is larger than root 
+		if (l < count && arr[l] > arr[largest])
+			largest = l;
+
+		// If right child is larger than largest so far 
+		if (r < count && arr[r] > arr[largest])
+			largest = r;
+
+		// If largest is not root 
+		if (largest != i) {
+			swap(arr[i], arr[largest]);
+
+			// Recursively heapify the affected sub-tree 
+			heapify(arr, largest);
+		}
+	}
+
+	void heapify2(int arr[],  int i)
+	{
+		// Find parent 
+		int parent = (i - 1) / 2;
+
+		if (arr[parent] > 0) {
+			// For Max-Heap 
+			// If current node is greater than its parent 
+			// Swap both of them and call heapify again 
+			// for the parent 
+			if (arr[i] > arr[parent]) {
+				swap(arr[i], arr[parent]);
+
+				// Recursively heapify the parent node 
+				heapify2(arr, parent);
+			}
+		}
+	}
+	// Function to insert a new node to the Heap 
+	void insertNode(int arr[], int Key)
+	{
+
+		// Increase the size of Heap by 1 
+		count = count + 1;
+
+		// Insert the element at end of Heap 
+		arr[count - 1] = Key;
+
+		// Heapify the new node following a 
+		// Bottom-up approach 
+		heapify2(arr,  count - 1);
+	}
+
+
+	// A utility function to print the array 
+	// representation of Heap 
+	int addHeap(int arr[])
+	{
+		int c = 0;
+		for (int i = 0; i < count; ++i)
+			c += arr[i];
+		return c;
+	}
+
+	void deleteRoot(int arr[])
+	{
+		// Get the last element 
+		int lastElement = arr[count - 1];
+
+		// Replace root with first element 
+		arr[0] = lastElement;
+
+		// Decrease size of heap by 1 
+		count = count - 1;
+
+		// heapify the root node 
+		heapify(arr, 0);
+	}
+};
+
+int main() {
+
+	int op;
+
+	while (cin >> op) {
+
+		int* arr = new int[MAX];
+		
+		MaxHeap m;
+		m.count = 0;
+		while (op--) {
+			char first;
+			int heapNum;
+			
+			
+			cin >> first ;
+
+
+			if (first == 'a') {
+				cin >> heapNum;
+				m.insertNode(arr, heapNum);
+				
+			}
+			else if (first == 'p') {
+				m.deleteRoot(arr );
+			}
+			else if (first == 'r' ){
+				cout << m.addHeap(arr) << endl;
+			}
+
+
+
+
+
+		}
+
+
+	}
+	system("pause");
+
+}
