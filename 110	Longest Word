@@ -1,0 +1,62 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 120535
+ * Submitted at:  2020-04-22 20:41:22
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    110
+ * Problem Name:  Longest Word
+ */
+
+#include <iostream>
+#include <string>
+#include <map>
+#include <sstream>
+#include<algorithm>
+using namespace std;
+
+
+
+int main() {
+
+	string tmp;
+	map<int, string> m;
+
+	int max = 0;
+
+	while (getline(cin, tmp)) {
+		transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
+		for (int i = 0; i < tmp.length(); i++) {
+
+			if (!isalpha(tmp[i]) && tmp[i]!='-') {
+				tmp[i] = ' ';
+			}
+
+		}
+
+
+		stringstream ss(tmp);
+		string word;
+
+
+		while (ss >> word) {
+
+			if (word == "e-n-d") {
+				goto end;
+			}
+
+			if (word.length() > max) {
+				m[word.length()] = word;
+				max = word.length();
+			}
+			
+			
+		}
+
+	}
+
+	end:
+
+	cout << m[max] << endl;
+}
