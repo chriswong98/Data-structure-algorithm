@@ -1,0 +1,124 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 90949
+ * Submitted at:  2019-10-18 12:28:53
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    745
+ * Problem Name:  Poker
+ */
+
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+class MyStack {
+	private: 
+		int *data;
+		int top;
+		int MAXSize;
+
+
+	public: 
+		MyStack(int size) {
+			data = new int[size];
+			top = -1;
+			MAXSize = size;
+		}
+		bool IsEmpty() {
+			return (top == -1);
+		}
+
+		bool IsFull() {
+			return (top == MAXSize - 1);
+		}
+
+		void push(int x) {
+			if (!IsFull()) {
+				top = top + 1;
+				data[top] = x;
+			}
+		}
+
+		int pop() {
+			int rtn_value;
+
+			if (!IsEmpty()) {
+				rtn_value = data[top];
+				top = top - 1;
+				return rtn_value;
+			}
+
+		}
+
+		void max() {
+			int max = 0;
+			if (!IsEmpty()) {
+				for (int i = 0; i <= top; i++) {
+					if (data[i] > max) {
+						max = data[i];
+					}
+				}
+				
+			}
+			cout << max << endl;
+		}
+
+};
+
+
+
+
+
+int main()
+{
+
+	int testCases = 0;
+	int addCard = 0;
+	int numOperations = 0;
+	string numbers;
+	char c;
+	int num;
+	cin >> testCases;
+
+	for (int j = 0; j < testCases; j++) {
+		cin >> addCard;
+		MyStack* s = new MyStack(100000);
+		cin.ignore();
+		getline(cin, numbers);
+		stringstream iss(numbers);
+		int tmp;
+		for (int i = 0; i < addCard; i++) {
+			iss >> tmp;
+			s->push(tmp);
+		}
+
+		cin >> numOperations;
+		cin.ignore();
+
+		for (int i = 0; i < numOperations; i++) {
+			iss.str("");
+			iss.clear();
+			numbers = "";
+			getline(cin, numbers);
+			stringstream iss(numbers);
+			iss >> c;
+			switch (c) {
+			case 'm':
+				s->max();
+				break;
+			case 'r':
+				s->pop();
+				break;
+			case 'a':
+				iss >> num;
+				s->push(num);
+				break;
+			}
+
+
+		}
+	}
+
+}
