@@ -1,0 +1,209 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 90309
+ * Submitted at:  2019-10-13 15:32:13
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    740
+ * Problem Name:  Manipulate List
+ */
+
+#include <iostream>
+using namespace std;
+
+class Node {
+private:
+	int data;
+	Node *next;
+	Node *prev;
+
+public:
+	Node() {
+		data = -1;
+		next = prev = NULL;
+	}
+
+	Node(int data) {
+		this->data = data;
+		next = prev = NULL;
+	}
+
+	void setNext(Node* n) {
+		next = n;
+	}
+
+	void setPrev(Node* n) {
+		prev = n;
+	}
+
+	Node* getNext() {
+		return next;
+	}
+
+	Node* getPrev() {
+		return prev;
+	}
+
+	int getData() {
+		return data;
+	}
+};
+
+
+
+class List {
+private:
+	Node* first;
+	Node* lastOne;
+
+public:
+
+	List() {
+		first = lastOne  = NULL;
+	}
+
+
+	void add(int data) {
+		Node* n;
+		n = new Node(data);
+
+		if (first == NULL) {
+			first = n;
+			lastOne = n;
+		}
+		else {
+			lastOne->setNext(n);
+			n->setPrev(lastOne);
+			lastOne = n;
+			n->setNext(NULL);
+			//n->setNext(first); circluar linked list
+			//first->setPrev(lastOne);
+			
+		}
+	}
+	void insert(int pos, int data) {
+		Node* n;
+		n = new Node(data);
+		Node* temp = position(pos);
+		n->setNext(temp->getNext());
+		temp->getNext()->setPrev(n);
+		n->setPrev(temp);
+		temp->setNext(n);
+		
+	}
+
+	void remove(int pos) {
+		Node * temp = position(pos);
+		if (temp == first) {
+			first = temp->getNext();
+			temp->getNext()->setPrev(NULL);
+		}
+		else if (temp == lastOne) {
+			lastOne = temp->getPrev();
+			temp->getPrev()->setNext(NULL);
+		}
+		else {
+			temp->getPrev()->setNext(temp->getNext());
+			temp->getNext()->setPrev(temp->getPrev());
+		}
+		delete temp;
+	}
+
+	void reverse(int i, int j) { // 2 3 10 4 5 6
+
+		Node* head = position(i);
+		Node* tail = position(j);
+			Node* curr = head;
+			Node* tmp = NULL;
+			for (int k = 0; k <= (j - i); k++) {
+				tmp = curr->getNext();
+				curr->setNext(curr->getPrev());
+				curr->setPrev(tmp);
+				curr = tmp;
+			}
+			
+			if (head != first && tail != lastOne) {
+				tail->setPrev(position(i - 1));
+				position(i - 1)->setNext(tail);
+				tmp->setPrev(head);
+				head->setNext(tmp);
+			}
+			else if (head == first && tail != lastOne) {
+				tail->setPrev(NULL);
+				first = tail;
+				tmp->setPrev(head);
+				head->setNext(tmp);
+			}
+			else if (head != first && tail == lastOne) {
+				tail->setPrev(position(i - 1));
+				lastOne = head;
+				first->setNext(tail);
+				head->setNext(NULL);
+			}
+	}
+
+	void query(int pos) {
+		Node * temp = position(pos);
+		cout << temp->getData() << endl;
+	}
+
+
+	Node * position(int pos) {
+		Node *temp = first;
+		for (int i = 1; i < pos; i++)
+			temp = temp->getNext();
+		return temp;
+	}
+
+	void Print() {
+		Node *temp = first;
+
+		while (temp != NULL) {
+			cout << temp->getData() << " ";
+			
+				temp = temp->getNext();
+			
+		}
+		
+	}
+};
+	int main() {
+		std::ios::sync_with_stdio(false);
+		List list;
+		int numOfNode, data, numOfOp,i, oprt, pos;
+
+		cin >> numOfNode;
+		for ( i = 0; i < numOfNode; i++) {
+			cin >> data;
+			list.add(data);
+		}
+
+		cin >> numOfOp;
+		for (i = 0; i < numOfOp; i++) {
+			cin >> oprt >> pos;
+			switch (oprt) {
+			case 1:
+				cin >> data;
+				list.insert(pos, data);
+				break;
+			case 2:
+				list.remove(pos);
+				break;
+			case 3:
+				cin >> data;
+				list.reverse(pos, data);
+				break;
+			case 4:
+				list.query(pos);
+				break;
+			}
+			//list.Print();
+		}
+		
+		system("pause");
+		return 0;
+
+	}
+
+
