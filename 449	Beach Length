@@ -1,0 +1,121 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 109847
+ * Submitted at:  2020-02-04 19:01:49
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    449
+ * Problem Name:  Beach Length
+ */
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+int main() {
+
+
+	string kingdom[51];
+
+
+	int countR = 0;
+	int length = 0;
+
+	
+	while (getline(cin, kingdom[countR])) {
+
+		if (kingdom[countR].empty())
+		{
+
+			cout << length  << endl;
+			countR = 0;
+			length = 0;
+			continue;
+		}
+		for (int i = 0; i < kingdom[countR].length(); i++) {
+			
+			if (i == 0) {
+				if (countR != 0 && kingdom[countR][i] == '#') {
+
+
+					if (kingdom[countR - 1][i] == '.') {
+						length++;
+					}
+					if (countR & 1) {
+						if (kingdom[countR - 1][i + 1] == '.') {
+							length++;
+						}
+					}
+
+				}
+				else if(countR != 0 && kingdom[countR][i] == '.') {
+					if (kingdom[countR - 1][i] == '#') {
+						length++;
+					}
+					if (countR & 1) {
+						if (kingdom[countR - 1][i + 1] == '#') {
+							length++;
+						}
+					}
+				}
+				continue;
+			}
+
+			if (kingdom[countR][i] == '#') {
+				if (kingdom[countR][i - 1] == '.') {
+					length++;
+				}
+
+				if (countR != 0) {
+					if (kingdom[countR - 1][i] == '.') {
+						length++;
+					}
+
+					if (countR & 1) {
+						if (kingdom[countR - 1][i + 1] == '.' && i!= kingdom[countR].length()-1) {
+							length++;
+						}
+					}
+					else {
+						if (kingdom[countR - 1][i - 1] == '.') {
+							length++;
+						}
+					}
+					
+				}
+			}
+
+			if (kingdom[countR][i] == '.') {
+				if (kingdom[countR][i - 1] == '#') {
+					length++;
+				}
+
+				if (countR != 0) {
+					if (kingdom[countR - 1][i] == '#') {
+						length++;
+					}
+
+					if (countR & 1) {
+						if (kingdom[countR - 1][i + 1] == '#' && i != kingdom[countR].length() - 1) {
+							length++;
+						}
+					}
+					else {
+						if (kingdom[countR - 1][i - 1] == '#') {
+							length++;
+						}
+					}
+					
+				}
+			}
+		}
+		countR++;
+	}
+
+	
+
+
+
+}
