@@ -1,0 +1,56 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 120518
+ * Submitted at:  2020-04-22 19:54:39
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    185
+ * Problem Name:  Andy's First Dictionary (UVa 10815)
+ */
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include<set>
+using namespace std;
+
+void print(const std::string& item)
+{
+	std::cout << item << std::endl;
+}
+int main() {
+
+
+	set<std::string> book;
+	string line;
+
+	while (getline(cin , line))
+	{
+		//if (line == "!n") {
+		//	break;
+		//}
+		
+
+		transform(line.begin(), line.end(), line.begin(), ::tolower);
+		for (int i = 0; i < line.length(); i++) {
+			if (!isalpha(line[i])) {
+				line[i] = ' ';
+			}
+			
+		}
+		istringstream ss(line);
+		string word;
+		while (ss >> word) {
+
+
+			
+				book.insert(word);
+
+		}
+	}
+	
+
+	for_each(book.begin(), book.end(), &print);
+}
