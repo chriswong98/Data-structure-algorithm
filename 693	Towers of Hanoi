@@ -1,0 +1,49 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 109258
+ * Submitted at:  2020-01-30 18:52:59
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    693
+ * Problem Name:  Towers of Hanoi
+ */
+
+#include <iostream>
+
+using namespace std;
+
+int static steps = 0;
+void hannoi(int n, char a, char b, char c)
+{
+	if (n == 0)
+		return;
+	hannoi(n - 1, a, b, c); // small disk to c
+
+	steps++; //  large disk to b
+	
+	hannoi(n - 1, c, b, a); //small disk back to a
+
+	steps++; // large disk to c
+
+	hannoi(n - 1, a, b, c); //small disk back to c
+	
+}
+
+
+
+int main() {
+
+	int N; //number of disks
+	while (cin >> N) {
+		steps = 0;
+
+		hannoi(N, 'A', 'B', 'C');
+
+		cout << steps << endl;
+
+
+	}
+
+	//system("pause");
+}
