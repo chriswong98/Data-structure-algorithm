@@ -1,0 +1,156 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 118838
+ * Submitted at:  2020-04-04 00:16:00
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    314
+ * Problem Name:  Extend to Palindromes (UVa 11475)
+ */
+
+#include<iostream>
+#include <string.h> 
+#include <string> 
+#include <algorithm>
+#include <stdlib.h>
+using namespace std;
+
+int words[100000];
+
+void prefixTable(string pattern, int prefix[], int n) {
+
+	prefix[0] = 0;
+
+	int len = 0;
+
+	int i = 1;
+
+	while (i < n) {
+
+		if (pattern[i] == pattern[len]) {
+
+			len++;
+			prefix[i] = len;
+			i++;
+
+		}
+		else {
+			if(len>0)
+				len = prefix[len - 1];
+			else {
+				prefix[i] = 0;
+				i++;
+			}
+		}
+
+	}
+
+}
+
+/*void moveTable(int prefix[], int n) {
+
+	for (int i = n - 1; i > 0; i--) {
+		prefix[i] = prefix[i - 1];
+	}
+	prefix[0] = -1;
+
+}*/
+
+void KMP(string text, string pattern) {
+
+	int M = pattern.length();
+	int N = text.length();
+
+	// create lps[] that will hold the longest prefix suffix 
+	// values for pattern 
+	int* prefix = new int[M];
+
+
+	prefixTable(pattern, prefix,M);
+
+	int i = 0; // index for txt[] 
+	int j = 0; // index for pat[] 
+
+	while (i < N) {
+		if (pattern[j] == text[i]) {
+			j++;
+			i++;
+		}
+
+		if (j == M) {
+
+			j = prefix[j - 1];
+		}
+
+		// mismatch after j matches 
+		else if (i < N && pattern[j] != text[i]) {
+			// Do not match lps[0..lps[j-1]] characters, 
+			// they will match anyway 
+			if (j != 0)
+				j = prefix[j - 1];
+			else
+				i = i + 1;
+		}
+	}
+
+	cout << text << pattern.substr(j, pattern.length() - j) << endl;
+}
+
+
+
+
+int main() {
+
+	string s;
+	while (getline(cin, s)) {
+		memset(words, 0, sizeof(words));
+		string tmp = s;
+		reverse(s.begin(), s.end());
+		//remove_if(s.begin(), s.end(), isspace);
+		if (s.compare(tmp) == 0) {
+			cout << s <<endl;
+		}
+		else {
+			/*int count = 0;
+			for (int i = 0; i < tmp.length(); i++) {
+
+				if (tmp[i] == s[0]) {
+					words[count++] = i;
+				}
+
+			}
+			for (int i = 0; i <= count; i++) {
+				string r = tmp.substr(0, words[i]);
+				
+				//int pos = words[0] + 1;
+				//cout << r << endl;
+				reverse(r.begin(), r.end());
+				string tmp2 = tmp;
+
+				tmp2 += r;
+				
+				string tmp3 = tmp2.substr(words[i], tmp2.length()-1);
+				reverse(tmp3.begin(), tmp3.end());
+				if (tmp.compare(tmp3) == 0) {
+
+					
+					cout << tmp2 << endl;
+					break;
+
+				}
+			}*/
+			//cout << tmp;
+			KMP(tmp, s);
+		}
+
+
+	}
+
+
+
+
+
+
+
+}
