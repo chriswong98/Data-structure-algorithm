@@ -1,0 +1,109 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 92356
+ * Submitted at:  2019-10-23 22:03:09
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    752
+ * Problem Name:  Task Manager
+ */
+
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <queue> 
+#include <map>
+
+using namespace std;
+
+int main() {
+
+	queue <int> highQ;
+	queue <int> lowQ;
+	int T;
+	//map<string, string> mapTask;
+	while (cin >> T) {
+
+
+		int* arriavlTimeLow = new int[T];
+		int* arriavlTimeHigh = new int[T];
+		int* highQPosition = new int[T];
+		int* lowQPosition = new int[T];
+		int hcount = 0;
+		int lcount = 0;
+		for (int i = 0; i < T; i++) {
+
+			int Ri;
+			int Wi;
+			int Pi;
+
+
+			cin >> Ri;
+			cin >> Wi;
+			cin >> Pi;
+
+
+			if (Pi == 0) {
+				highQ.push(Wi);
+			//	mapTask["HighTaskarrivalTime"+hcount] = Ri;
+				arriavlTimeHigh[hcount] = Ri;
+				highQPosition[hcount] = i;
+				hcount++;
+			}
+			else {
+				lowQ.push(Wi);
+				arriavlTimeLow[lcount] = Ri;
+				lowQPosition[lcount] = i;
+				lcount++;
+			}
+
+		}
+
+
+
+		int counter = 0;
+		int arrivalHi = 0;
+		int arrivalLi = 0;
+		int* finalResult = new int[T];
+		while (!highQ.empty() || !lowQ.empty()) {
+
+			if (arriavlTimeHigh[arrivalHi] <= counter && !highQ.empty()) {
+				//cout << arriavlTimeHigh[arrivalHi] << " " << counter;
+				counter += highQ.front();
+				highQ.pop();
+				finalResult[highQPosition[arrivalHi]] = counter;
+				arrivalHi++;
+				continue;
+			}
+			else if (arriavlTimeLow[arrivalLi] <= counter && !lowQ.empty()) {
+				counter += lowQ.front();
+				lowQ.pop();
+				finalResult[lowQPosition[arrivalLi]] = counter;
+				arrivalLi++;
+				//cout <<" 1";
+				continue;
+			}
+
+			counter++;
+
+
+
+		}
+
+		//cout << finalResult[2];
+
+		for (int i = 0; i < T; i++) {
+			if (i  == T-1) {
+				cout << finalResult[i] <<endl;
+			}
+			else {
+				cout << finalResult[i] << " ";
+			}
+
+		}
+	}
+	//system("pause");
+
+
+}
