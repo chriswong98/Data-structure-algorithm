@@ -1,0 +1,64 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 127070
+ * Submitted at:  2020-05-15 19:20:58
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    222
+ * Problem Name:  Simple Calculation (II)
+ */
+
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include <sstream>
+
+using namespace std;
+
+int main() {
+
+	string s;
+	cout << fixed << setprecision(4);
+	bool line = true;
+
+	while ( getline(cin, s) ) {
+
+		stringstream ss(s);
+
+		long double tmp;
+
+		long double sum = 0;
+
+		while (ss >> tmp) {
+
+			sum += tmp;
+
+		}
+
+		if (line) {
+
+			cout << sum << endl;
+			line = false;
+		}
+		else {
+
+			cout << endl;
+
+			cout << sum << endl;
+
+		}
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+}
