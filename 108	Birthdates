@@ -1,0 +1,116 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 108459
+ * Submitted at:  2020-01-21 11:12:36
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    108
+ * Problem Name:  Birthdates
+ */
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+
+	int n;
+
+	cin >> n;
+
+
+	int day;
+	int month;
+	int year;
+
+	int dayY;
+	int monthY;
+	int yearY;
+
+	string youngest = "";
+	string oldest = "";
+
+	string tmp;
+	cin >> tmp;
+
+	youngest = tmp;
+	oldest = tmp;
+
+	cin >> day >> month >> year;
+
+	dayY = day;
+	monthY = month;
+	yearY = year;
+
+	n--;
+	while (n--) {
+		
+		cin >> tmp;
+
+		int day2, month2, year2;
+
+		cin >> day2 >> month2 >> year2;
+
+		if (year2 < year) {
+			oldest = tmp;
+			day = day2;
+			month = month2;
+			year = year2;
+		}
+		else if (year2 == year) {
+
+			if (month2 < month) {
+				oldest = tmp;
+				day = day2;
+				month = month2;
+				year = year2;
+			}
+			else if (month2 == month) {
+				if (day2 < day) {
+					oldest == tmp;
+					day = day2;
+					month = month2;
+					year = year2;
+				}
+			}
+
+		}
+		
+		if (year2 > yearY) {
+			youngest = tmp;
+			dayY = day2;
+			monthY = month2;
+			yearY = year2;
+		}
+		else if (year2 == yearY) {
+
+			if (month2 > monthY) {
+				youngest = tmp;
+				dayY = day2;
+				monthY= month2;
+				yearY = year2;
+			}
+			else if (month2 == monthY) {
+				if (day2 > day) {
+					youngest == tmp;
+					dayY = day2;
+					monthY = month2;
+					yearY = year2;
+				}
+			}
+
+		}
+
+
+
+
+	}
+
+	cout << youngest << endl;
+	cout << oldest << endl;
+	
+
+	//system("pause");
+
+}
