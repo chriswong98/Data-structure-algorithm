@@ -1,0 +1,114 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 100664
+ * Submitted at:  2019-12-11 01:47:26
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    747
+ * Problem Name:  Boring job
+ */
+
+#include <iostream>
+#include <vector> 
+using namespace std;
+
+
+class MagicNode {
+
+public:
+
+	int number, index;
+
+	MagicNode(int n, int i) { 
+		number = n;
+		index = i;
+	}
+	
+};
+
+
+int main() {
+
+	int testcases;
+
+	cin >> testcases;
+
+	while (testcases--) {
+
+		int N, K;
+
+		cin >> N >> K;
+		vector<MagicNode> sequence;
+		for (int i = 0; i < N; i++ ) {
+			int tmp;
+			cin >> tmp;
+			sequence.push_back( MagicNode(tmp, (i + 1)) );
+		}
+
+		vector<MagicNode> tmp;
+		while (sequence.size()>0) {
+			
+
+		/*	for (auto &i : sequence) {
+
+				tmp.push_back(i);
+				sequence.erase(i);
+			}*/
+
+
+			for (int i = 0; i < K; i++) {
+				if (sequence.size() == 0) {
+					break;
+				}
+				tmp.push_back(sequence.at(0));
+				//tmp.insert(tmp.begin() + i, sequence.at(i) );
+				sequence.erase(sequence.begin());
+			}
+
+			/*for (int i = 0; i < sequence.size(); i++) {
+				cout << sequence.at(i).number;
+			}*/
+
+
+			int max = tmp.at(0).number;
+			int index = tmp.at(0).index;
+			int current=0;
+			for (int i = 0; i < tmp.size(); i++) {
+				if (tmp.at(i).number > max) {
+					max = tmp.at(i).number;
+					index = tmp.at(i).index;
+					current = i;
+				}
+			}
+
+
+			tmp.erase(tmp.begin() + current);
+
+	
+			
+			cout << index;
+
+			for (int i = 0; i < tmp.size(); i++) {
+				(tmp.at(i).number -= 1);
+				sequence.push_back(tmp.at(i));				
+			}
+
+			if(sequence.size() > 0) {
+				cout << " ";
+			}
+			else if (sequence.size() == 0 ) {
+				cout << endl;
+			}
+			
+			
+			
+
+			tmp.clear();
+		}
+	}
+
+
+	system("pause");
+	return 0;
+}
