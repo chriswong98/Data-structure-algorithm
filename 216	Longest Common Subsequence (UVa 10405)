@@ -1,0 +1,60 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 118875
+ * Submitted at:  2020-04-05 00:28:07
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    216
+ * Problem Name:  Longest Common Subsequence (UVa 10405)
+ */
+
+#include <iostream>
+#include <string>
+#include <map>
+#include <sstream>
+#include <algorithm>
+#include<string.h>
+using namespace std;
+
+int dp[1001][1001]{ 0 };
+int main() {
+
+
+	string s1;
+	string s2;
+
+	while (getline(cin, s1)) {
+
+
+		getline(cin, s2);
+		memset(dp, 0, sizeof(dp));
+		for (int i = 1; i <= s1.length(); i++) {
+
+
+			for (int j = 1; j <= s2.length(); j++) {
+
+				if (s1[i-1] == s2[j-1]) {
+
+					dp[i][j] = dp[i - 1][j - 1] + 1;
+
+				}
+				else {
+					dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+				}
+			}
+
+		}
+
+		cout << dp[s1.length()][s2.length()] << endl;
+
+
+	}
+
+
+
+
+
+
+
+}
