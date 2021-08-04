@@ -1,0 +1,169 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 91428
+ * Submitted at:  2019-10-20 00:43:57
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    744
+ * Problem Name:  Stack Shuffling
+ */
+
+#include <cstdio>
+#include <iostream>
+#include <stack> 
+
+using namespace std;
+/*class MyStack {
+private:
+	int *data;
+	int top;
+	int MAXSize;
+
+
+public:
+	MyStack(int size) {
+		data = new int[size];
+		top = -1;
+		MAXSize = size;
+	}
+	bool IsEmpty() {
+		return (top == -1);
+	}
+
+	bool IsFull() {
+		return (top == MAXSize - 1);
+	}
+
+	void push(int x) {
+		if (!IsFull()) {
+			top = top + 1;
+			data[top] = x;
+		}
+		else {
+			return;
+		}
+	}
+
+	int pop() {
+
+		int rtn_value;
+		if (!IsEmpty()) {
+			rtn_value = data[top];
+			top = top - 1;
+			return rtn_value;
+		}
+		else {
+			return -1;
+		}
+	}
+
+	void setTop() {
+		top = -1;
+	}
+
+
+};
+*/
+int main()
+{
+	int T;
+	scanf("%d", &T);
+
+	while (T--)
+	{
+		int aNum;
+		scanf("%d", &aNum);
+		int orgin;
+		//MyStack* aStack = new MyStack(aNum);
+		//MyStack* sStack = new MyStack(aNum);
+		//MyStack* bStack = new MyStack(aNum);
+		stack <int> aStack;
+		stack <int> sStack;
+		stack <int> bStack;
+		stack <int> tStack;
+		for (int i = 0; i < aNum; i++)
+		{
+			scanf("%d", &orgin);
+			aStack.push(orgin);
+		}
+
+		int permu;
+		scanf("%d", &permu);
+		while (permu--)
+		{
+			tStack = aStack;
+			int* temp = new int[aNum];
+			for (int i = 0; i < aNum; i++)
+			{
+				scanf("%d", &temp[i]);
+			}
+
+			int j = 0;
+			for (int i = 0; i < aNum; i++)
+			{
+				int tmp =NULL;
+				while (!sStack.empty()) {
+					tmp = sStack.top();
+				//	cout << temp[j] << tmp << " ";
+					if (tmp == temp[j]) {
+						bStack.push(tmp);
+						sStack.pop();
+						j++;
+
+					}
+					else {
+						break;
+					}
+				}
+				
+				 tmp = tStack.top();
+				tStack.pop();
+				sStack.push(tmp);
+				//cout << temp[j] << tmp << " ";
+					if (tmp == temp[j]) {
+					//	cout << temp[j] << tmp << " ";
+						bStack.push(tmp);
+						sStack.pop();
+						j++;
+						
+					}
+				
+
+				
+
+				
+
+			}
+
+			while (!sStack.empty()) {
+			//	cout << sStack.top();
+				bStack.push(sStack.top());
+				sStack.pop();
+			}
+
+			bool comparing = true;
+			for (int i = (aNum-1); i >= 0; i--)
+			{
+				int bTemp = bStack.top();
+				bStack.pop();
+				if (bTemp != temp[i]) {
+					comparing = false;
+				}
+				//cout << temp[i] << bTemp << " ";
+			}
+
+			if (comparing) {
+				cout << "Aye" << endl;
+			}
+			else {
+				cout << "Impossible" << endl;
+			}
+				
+			
+
+		}
+	}
+
+	//system("pause");
+}
