@@ -1,0 +1,175 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 118504
+ * Submitted at:  2020-03-30 16:48:57
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    621
+ * Problem Name:  Rebuilding Roads
+ */
+
+#include <iostream>
+#include<string>
+#include<string.h>
+using namespace std;
+
+
+int A[52];
+struct Edge {
+	int From, To, Length;
+};
+
+Edge* Build;
+Edge* Remove;
+
+int CMP2(const void *a, const void *b) {
+	Edge *A = (Edge*)a;
+	Edge *B = (Edge*)b;
+	return B->Length - A->Length;
+}
+
+int CMP(const void *a, const void *b) {
+	Edge *A = (Edge*)a;
+	Edge *B = (Edge*)b;
+	return A->Length - B->Length;
+}
+void UnionSet(int set1, int set2) {
+	A[set1] += A[set2]; // A[ root of set ] is negative, and its
+	A[set2] = set1;     // magnitude is the num of members
+}
+int Find(int element) {
+	if (A[element] < 0)
+		return element;
+	else
+		return A[element] = Find(A[element]);
+}
+void Union(int element1, int element2, int weight) {
+	int root1 = Find(element1);
+	int root2 = Find(element2);
+
+	if (root1 != root2) {
+
+		if (A[root1] < A[root2]) //root1 has more member		
+			UnionSet(root1, root2);
+		else
+			UnionSet(root2, root1);
+	}
+}
+
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	int N;
+
+	int C[52][52]; //old roads
+
+	int B[52][52]; //building costs
+
+	int D[52][52]; //removal costs
+
+
+	while (cin >> N && N!=0) {
+		string tmp;
+		getline(cin, tmp);
+		memset(A, -1, sizeof(A));
+
+		memset(C, 0, sizeof(C));
+
+		memset(B, 0, sizeof(B));
+
+		memset(D, 0, sizeof(D));
+		int count1 = 0;
+		int count2 = 0;
+		for (int i = 0; i < N; i++) {
+			getline(cin, tmp);
+			for (int j = 0; j < N; j++) {
+				C[i][j] = tmp[j] - '0';
+				if (j > i) {
+					if (tmp[j] == '1' && i != j) {
+
+						count1++;
+					}
+					else
+						count2++;
+				}
+			}
+		}
+		int countB = 0;
+		Build = new Edge[count2];
+		for (int i = 0; i < N; i++) {
+
+			for (int j = 0; j < N; j++) {
+
+				cin >> B[i][j];
+				if (j > i) {
+					if (C[i][j] == 0 && i != j) {
+						Edge e{ i, j, B[i][j] };
+						Build[countB++] = e;
+					}
+				}
+			}
+		}
+		int countR = 0;
+		Remove = new Edge[count1];
+		for (int i = 0; i < N; i++) {
+
+			for (int j = 0; j < N; j++) {
+
+				cin >> D[i][j];
+				if (j > i) {
+					if (C[i][j] == 1 && i != j) {
+						Edge e{ i, j, D[i][j] };
+						Remove[countR++] = e;
+					}
+				}
+			}
+		}
+
+		
+		qsort(Remove, count1, sizeof(Edge), CMP2);
+		//cout << Remove[0].From << " " << Remove[0].To;
+		int costs = 0;
+		for (int i = 0; i < count1; i++) {
+			int root1 = Find(Remove[i].From);
+			int root2 = Find(Remove[i].To);
+			if (root1 != root2) {
+
+				if (A[root1] < A[root2]) //root1 has more member		
+					UnionSet(root1, root2);
+				else
+					UnionSet(root2, root1);
+
+
+			}
+			else {
+				costs += Remove[i].Length;
+
+			}
+		}
+
+
+		qsort(Build, count2, sizeof(Edge), CMP);
+
+		
+		for (int i = 0; i < count2; i++) {
+			int root1 = Find(Build[i].From);
+			int root2 = Find(Build[i].To);
+
+			if (root1 != root2) {
+				costs += Build[i].Length;
+				if (A[root1] < A[root2]) //root1 has more member		
+					UnionSet(root1, root2);
+				else
+					UnionSet(root2, root1);
+			}
+		}
+
+
+
+		cout << costs << endl;
+	}
+
+
+}
