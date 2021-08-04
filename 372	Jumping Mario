@@ -1,0 +1,55 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 91868
+ * Submitted at:  2019-10-21 18:44:32
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    372
+ * Problem Name:  Jumping Mario
+ */
+
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+int main()
+{
+
+	int T=0;
+
+	cin >> T;
+	int i = 0;
+	while (T--) {
+		int N=0;
+		cin.ignore();
+		cin >> N; //number of walls;
+		int high = 0;
+		int shortt = 0;
+		int height=0;
+		int current = 0;
+		for(int i=0; i<N ;i++){
+			
+			scanf("%d", &height);
+
+			if (i == 0) {
+				current = height;
+				continue;
+			}
+			if (current > height) {
+				shortt++;
+			}
+			else if (current < height) {
+				high++;
+			}
+			current = height;
+		}
+
+		cout << "Case " << ++i << ": " << high << " " << shortt <<endl;
+
+	}
+
+	
+		//system("pause");
+	return 0;
+}
