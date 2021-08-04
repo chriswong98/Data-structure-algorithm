@@ -1,0 +1,117 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 104426
+ * Submitted at:  2019-12-22 02:33:18
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    758
+ * Problem Name:  Fibonacci Sequence
+ */
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include<queue>
+#include<cmath> 
+using namespace std;
+
+
+ int S[5000000];
+// A function to do counting sort of arr[] according to 
+// the digit represented by exp. 
+
+
+void countSort(  int n,   int exp)
+{
+
+	 //long long int i;
+	  int count[1024] = { 0 };
+	  int* output = new  int[n];
+	// Store count of occurrences in count[] 
+	for (int i = 0; i < n; i++)
+		count[(S[i] / exp) % 1024]++;
+
+	// Change count[i] so that count[i] now contains actual 
+	//  position of this digit in output[] 
+	for ( int i = 1; i < 1024; i++)
+		count[i] += count[i - 1];
+
+	// Build the output array 
+	for ( int i = (n - 1); i >= 0; i--)
+	{
+		output[count[(S[i] / exp) % 1024] - 1] = S[i];
+		count[(S[i] / exp) % 1024]--;
+	}
+
+	// Copy the output array to arr[], so that arr[] now 
+	// contains sorted numbers according to current digit 
+	for (int i = 0; i < n; i++)
+		S[i] = output[i];
+	delete[] output;
+}
+
+// The main function to that sorts arr[] of size n using  
+// Radix Sort 
+void radixsort(  int n,  int Q)
+{
+	// Find the maximum number to know number of digits 
+	int m = Q-1;
+
+	// Do counting sort for every digit. Note that instead 
+	// of passing digit number, exp is passed. exp is 10^i 
+	// where i is current digit number 
+	for ( int exp = 1; m / exp > 0; exp *= 1024)
+		countSort( n, exp);
+}
+void storeF(int n, int Q)
+{
+	S[0] = 1;
+	S[1] = 1;
+	for (int i = 2; i < n; i++)
+	{
+		S[i] = (S[i - 1] + S[i - 2]) % Q;
+	}
+}
+
+int main() {
+	 int T;
+	scanf("%d", &T);
+	while (T--) {
+		int n, Q;
+		scanf("%d%d", &n, &Q);
+
+		//unsigned long long int* S = new unsigned long long int[n];
+
+
+		S[0] = 1 % Q;
+		S[1] = 1 % Q;
+		for (unsigned long long int i = 2; i < n; i++) {
+			S[i] = (S[i - 1] + S[i - 2]) % Q;
+			
+			//S[i] = fib(i + 1);
+		}
+		//countSort(S , n , Q);
+		//storeF(n, Q);
+		radixsort( n, Q);
+		
+		//for (unsigned long long int i = 0; i < n; i++)
+		//	if(i==n-1)
+		//	cout << S[i] << " ";
+
+
+
+		unsigned long long int sum = 0;
+
+		for (unsigned long long int i = 0; i < n; i++) {
+			sum += (S[i] * (i + 1)) ;
+			sum %= Q;
+		}
+		//sum = sum % Q;
+		printf("%lld\n", sum);
+
+		//delete[] S;
+	}
+	//system("pause");
+	return 0;
+}
