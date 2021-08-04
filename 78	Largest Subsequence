@@ -1,0 +1,123 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 89001
+ * Submitted at:  2019-09-30 00:03:01
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    78
+ * Problem Name:  Largest Subsequence
+ */
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <cstdio>
+#include <sstream>
+
+using namespace std;
+
+
+
+int main()
+{
+
+    int numberOfWords;
+    cin >> numberOfWords;
+
+    string words;
+    vector<string> stringHolder;
+
+
+    while(cin >> words){
+
+        stringHolder.push_back(words);
+
+    }
+
+    int vSize = stringHolder.size();
+
+    for (int i = 0; i < vSize; i++) {
+
+        string word =  stringHolder[i];
+
+
+
+
+        bool test = false;
+        string largest;
+
+        while( word.length() > 0 ){
+
+            char maxC = word.at(0);
+        int singleMax =0;
+            int maxCoordinate[word.length()];
+
+            bool test = false;
+            for(int j =0; j < word.length(); j++){
+
+                if( word.at(j) > maxC ){
+
+                    maxC = word.at(j);
+                    singleMax = j;
+                   // cout << singleMax << endl;
+                }
+
+
+            }
+
+           /* for(int m =0; m < word.length(); m++){
+
+                if (word.at(m) == maxC ){
+
+                        maxC = word.at(m);
+                        maxCoordinate[m] = j;
+                        test = true;
+
+                }
+
+
+            }*/
+
+           // if (test == true){
+
+            //    for(int k =0; k < (sizeof(maxCoordinate)/sizeof(*maxCoordinate)); k++){
+            //        word.erase(maxCoordinate[k],1);
+            //        cout << word  << 3 << endl ;
+            //        break;
+            //    }
+
+           // }else{
+
+
+           if ((singleMax+1) == word.length()){
+                 word.erase(0,word.length());
+
+           }else{
+               word.erase(0,singleMax+1);
+
+           }
+
+
+           // }
+            //word.erase(maxCoordinate,1);
+            largest.push_back(maxC);
+
+
+
+           // cout << word << endl;
+
+
+        }
+        cout << largest << endl;
+
+	}
+
+
+
+
+
+    return 0;
+}
