@@ -1,0 +1,57 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 123515
+ * Submitted at:  2020-05-11 02:50:12
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    212
+ * Problem Name:  Big Mod (UVA 374)
+ */
+
+#include <iostream>
+#include <math.h>
+#include<string>
+using namespace std;
+
+long long mod(long long B, long long P, long long M)
+{
+
+	if (P == 0) {
+		return 1;
+	}
+	else if (P == 1) {
+		return B % M;
+	}
+	else {
+		long long half = mod(B, P / 2, M);
+
+		if (P % 2 == 0) {
+			return half*half % M;
+		}
+		else {
+			return half * half * B % M;
+		}
+	}
+
+
+}
+
+
+
+int main() {
+
+
+	long long B, P, M;
+
+	while (cin >> B >> P >> M) {
+
+		cout << mod(B, P, M) << endl;
+
+	}
+
+
+
+
+
+}
