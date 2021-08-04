@@ -1,0 +1,73 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 127123
+ * Submitted at:  2020-05-15 20:51:41
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    676
+ * Problem Name:  Capital City
+ */
+
+#include <iostream>
+
+using namespace std;
+
+#define INF 0xFFFFFFF
+
+int cities[101][101];
+
+int main() {
+
+	int n, m;
+	
+	while (cin >> n >> m) {
+
+		for (int i = 1; i <= 100; i++) {
+			for (int j = 1; j <= 100; j++) {
+				if (i == j) {
+					cities[i][j] = 0;
+				}
+				else {
+					cities[i][j] = INF;
+				}
+			}
+		}
+
+		for (int i = 0; i < m; i++) {
+			int u, v, w;
+			cin >> u >> v >> w;
+			cities[u][v] = w;
+			cities[v][u] = w;
+		}
+
+		for (int k = 1; k <= n; k++) {
+			for (int i = 1; i <= n; i++) {
+				for (int j = 1; j <= n; j++) {
+					if (cities[i][j] >  (cities[i][k] + cities[k][j])  ) {
+						cities[i][j] = cities[i][k] + cities[k][j];
+					} // Floyd–Warshall algorithm
+				}
+			}
+		}
+
+		int small = 0;
+		int label = 0;
+		
+		for (int i = 1; i <= n; i++) {
+			int tmp = 0;
+			for (int j = 1; j <= n; j++)
+				tmp += cities[i][j];
+
+			if (tmp < small || small == 0) {
+				small = tmp;
+				label = i;
+			}
+		}
+
+		cout << label << endl;
+
+	}
+}
+
+
