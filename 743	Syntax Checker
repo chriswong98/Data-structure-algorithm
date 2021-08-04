@@ -1,0 +1,101 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 92006
+ * Submitted at:  2019-10-22 15:09:19
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    743
+ * Problem Name:  Syntax Checker
+ */
+
+#include <iostream>
+#include <stack> 
+#include <sstream>
+#include <string>
+using namespace std;
+
+int main()
+{
+	
+	string c;
+	while (getline(cin, c)) {
+		int size = c.length();
+		//cout << c;
+		stack<char> s;
+		int poisition;
+		int count = 0;
+		for (int i = 0; i < size; i++) {
+			if (c[i] == '[' || c[i] == '{' || c[i] == '(') {
+				s.push(c[i]); //push if it is an open bracket
+				
+				if (count == 0) {
+					poisition = i + 1;
+				}
+				count++;
+				continue;
+			}
+			 if(!s.empty()) { //print first unmatched closing bracket
+				char tmp = s.top();
+			//	cout << tmp;
+				switch (c[i]) {
+					case ']':
+						s.pop();
+						if (tmp != '[') {
+							cout << (i + 1) << endl;
+							goto end;
+						}
+						count--;
+						break;
+					case '}':
+						s.pop();
+						if (tmp != '{') {
+							cout << (i + 1) << endl;
+							goto end;
+						}
+						count--;
+						break;
+					case ')':
+						s.pop();
+						if (tmp != '(') {
+							cout << (i + 1) << endl;
+							goto end;
+						}
+						count--;
+						break;
+				}
+			}
+			else {
+				 switch (c[i]) {
+				 case ']':
+						 cout << (i + 1) << endl;
+						 goto end;
+						 break;
+				 case '}':
+						 cout << (i + 1) << endl;
+						 goto end;
+						 break;
+				 case ')':
+						 cout << (i + 1) << endl;
+						 goto end;
+						 break;
+				 }
+
+
+			 }
+
+		}
+
+		if (!s.empty()) {
+		
+			cout << poisition << endl;
+		}
+		else if(c.length() !=0 && s.empty()) {
+			cout << "Success" << endl;
+		}
+
+	end:;
+	}
+
+	//system("pause");
+}
