@@ -1,0 +1,72 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 103703
+ * Submitted at:  2019-12-21 03:02:24
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    742
+ * Problem Name:  Simple Quadtree
+ */
+
+#include <cmath>
+#include <string>
+#include <iostream>
+using namespace std;
+
+static int brain(int i0, int i1, int j0, int j1, int** quadtree) {
+	int counter0 = 0;
+	int counter1 = 0;
+	//cout<<i0<<" "<<i1<<" "<<j0<<" "<<j1<<endl;
+	for (int i = i0; i<i1; i++) {
+		for (int j = j0; j<j1; j++) {
+			if (quadtree[i][j] == 0)
+				counter0++;
+			else
+				counter1++;
+		}
+	}
+	if ((counter0 == 0) || (counter1 == 0))
+		return 1;
+	else
+		return 1 + brain(i0, (i0 + i1) / 2, j0, (j0 + j1) / 2, quadtree) + brain(i0, (i0 + i1) / 2, (j0 + j1) / 2, j1, quadtree) + brain((i0 + i1) / 2, i1, (j0 + j1) / 2, j1, quadtree) + brain((i0 + i1) / 2, i1, j0, (j0 + j1) / 2, quadtree);
+
+}
+
+
+
+
+int main()
+{
+	int k;
+
+	while (cin >> k) {
+
+		int n = pow(2, k); // n x n of image
+
+		int** quadtree = new int*[n];
+		for (int i = 0; i < n; i++)
+			quadtree[i] = new int[n];
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {	
+				scanf("%1d", &quadtree[i][j]);
+			}
+
+		}
+
+		
+
+
+
+
+		cout << brain(0, n, 0, n, quadtree) << endl;
+
+
+	}
+
+
+	system("pause");
+
+		
+}
