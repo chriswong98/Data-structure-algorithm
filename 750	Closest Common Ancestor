@@ -1,0 +1,174 @@
+/*****************************************
+ * (This comment block is added by the Judge System)
+ * Submission ID: 101574
+ * Submitted at:  2019-12-16 23:55:57
+ *
+ * User ID:       779
+ * Username:      55744759
+ * Problem ID:    750
+ * Problem Name:  Closest Common Ancestor
+ */
+
+#include "iostream" 
+#include "vector" 
+#include "math.h" 
+#include<algorithm> 
+using namespace std;
+
+struct Node
+{
+	vector<Node *> children;
+	int key;
+	int depth;
+	Node* parent;
+};
+
+// Utility function to create a new tree Node 
+Node* newNode(int key)
+{
+	Node *temp = new Node;
+	temp->key = key;
+	temp->parent = NULL;
+	temp->depth = 0;
+	return temp;
+}
+
+Node* searchNode(int key, Node* root) {
+	
+	if (root == NULL)
+		return NULL;
+
+	if (root->key == key)
+		return root;
+
+
+	for (auto const& value : root->children) {
+		Node* tmp = searchNode(key, value);
+
+		if (tmp){
+			if ( tmp->key == key)
+				return tmp;
+		}
+
+	}
+
+
+	return NULL;
+}
+
+
+
+
+struct Node *findLCA(struct Node* root, int n1, int n2)
+{
+	// Base case 
+	if (root == NULL) return NULL;
+
+	if (root->key == n1 || root->key == n2)
+		return root;
+
+	Node* countN1 = searchNode(n1, root);
+	Node* countN2 = searchNode(n2, root);
+
+
+
+	//cout << countN1->depth << " " << countN2->depth << endl;
+
+
+	Node* deepest =NULL;
+	Node* notDeep =NULL;
+	if (countN1->depth > countN2->depth) {
+		deepest = countN2;
+		notDeep = countN1;
+	}
+	else if (countN2->depth > countN1->depth) {
+		deepest = countN1;
+		notDeep = countN2;
+	}
+	else if (countN2->depth == countN1->depth) {
+		Node* parentN1 = countN1->parent;
+		while (!searchNode(countN2->key, parentN1)) {
+			parentN1 = parentN1->parent;
+		}
+		return parentN1;
+	}
+
+
+
+	
+	if (searchNode(notDeep->key, deepest))
+		return deepest;
+	else {
+		Node* parentN1 = countN1->parent;
+		while (!searchNode(countN2->key, parentN1)) {
+			parentN1 = parentN1->parent;
+		}
+		return parentN1;
+	}
+
+}
+
+
+int main(int argc, char const *argv[]) {
+
+
+	int T;
+
+	cin >> T;
+
+	while (T--) {
+
+		int rootNum;
+		int numOfMemb;
+
+		cin >> rootNum >> numOfMemb;
+
+		Node* root = newNode(rootNum);
+
+		Node* parent = root;
+	
+		
+		for (int i = 0; i < (numOfMemb - 1); i++) {
+
+			int membNum;
+			int parentNum;
+
+			cin >> membNum >> parentNum;
+			
+			parent = searchNode(parentNum, root);
+
+
+			Node* son = newNode(membNum);
+			parent->children.push_back(son);
+
+			son->parent = parent;
+
+			Node* tmp = son;
+			int countDepth = 0;
+			while (tmp->parent) {
+
+				countDepth++;
+				tmp = tmp->parent;
+
+			}
+			son->depth = countDepth;
+		}
+		
+
+
+		int first;
+		int second;
+		cin >> first >> second;
+
+		
+		cout << findLCA(root,first, second)->key << endl;
+		
+	}
+
+
+
+	system("pause");
+
+
+
+}
